@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Universal Project Builder 1.0">
+<title>Universal Project Builder</title>
+<style id="upb-style">
+:root{--canvas:#EDF0F4;--paper:#FFFFFF;--wash:#F5F7FA;--ink:#172131;--ink-2:#364154;--graphite:#596476;--faint:#8A94A5;--rule:#D7DDE5;--rule-2:#B8C1CE;--ok:#0D7655;--ok-wash:#E5F3EC;--warn:#8A5700;--warn-wash:#FFF4DC;--err:#B42318;--err-wash:#FDEDEB;--r-lg:16px;--r-md:10px;
+--f-ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--f-display:"Avenir Next",Avenir,"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+--f-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--canvas);color:var(--ink);font:15px/1.55 var(--f-ui);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+code{font-family:var(--f-mono);font-size:.9em}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(28px,6vw,64px) clamp(14px,4vw,32px) 40px}
+.banner{display:flex;align-items:center;gap:14px;max-width:780px;margin:0 auto 32px;padding:14px 18px;background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--r-md);font-size:14.5px}
+.banner>.i{font-size:28px}
+.banner strong{font-weight:650}
+.hero{text-align:center;max-width:720px;margin:0 auto clamp(28px,5vw,48px)}
+.mark{display:block;width:54px;height:54px;margin:0 auto 18px;color:var(--ink)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5.4vw,56px);line-height:1.04;letter-spacing:-.03em;margin:0 0 14px;text-wrap:balance}
+.lead{margin:0 auto;max-width:52ch;font-size:clamp(16px,1.7vw,18.5px);color:var(--ink-2);text-wrap:pretty}
+.facts{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin:20px 0 0;padding:0;font-size:13.5px;color:var(--graphite)}
+.facts li{display:inline-flex;align-items:center;gap:7px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.pkg-mode #extract{order:-1}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-lg);box-shadow:0 1px 2px rgba(23,33,49,.05)}
+.card-head{padding:24px 26px 20px;border-bottom:1px solid var(--rule)}
+.card-head h2{font-family:var(--f-display);font-size:23px;line-height:1.2;letter-spacing:-.015em;margin:14px 0 6px}
+.card-head p{margin:0;color:var(--graphite);max-width:54ch}
+.card-body{padding:24px 26px 26px}
+.flow{display:inline-flex;align-items:center;gap:8px;color:var(--faint)}
+.tag{font:600 12px/1 var(--f-mono);padding:5px 8px 4px;border:1.5px solid var(--ink);border-radius:5px;color:var(--ink)}
+.tag.solid{background:var(--ink);color:#fff}
+.i{display:inline-flex;width:1.15em;height:1.15em;flex:none}
+.i svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;font-weight:600;font-size:14.5px;line-height:1.2;color:var(--ink);background:var(--paper);border:1px solid var(--rule-2);border-radius:9px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background-color .15s,border-color .15s}
+.btn:hover{background:var(--wash);border-color:var(--graphite)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.primary:hover{background:#26354C;border-color:#26354C}
+.btn.lg{padding:13px 20px;font-size:15.5px}
+.btn.sm{padding:7px 11px;font-size:13.5px}
+.btn.quiet{background:transparent;border-color:transparent;color:var(--graphite)}
+.btn.quiet:hover{background:var(--wash);color:var(--ink)}
+.btn[disabled]{opacity:.42;cursor:not-allowed}
+.btn .i{font-size:17px}
+.btn:focus-visible,.link:focus-visible,.drop:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.link{appearance:none;background:none;border:0;padding:2px 4px;color:var(--ink-2);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer;border-radius:4px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.stack{display:grid;gap:18px}
+.muted{color:var(--graphite)}
+.small{font-size:13.5px}
+p.small,p.muted{margin:0}
+.drop{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:38px 20px 32px;background:var(--wash);border:1.5px dashed var(--rule-2);border-radius:12px;cursor:pointer;transition:border-color .15s,background-color .15s}
+.drop:hover{border-color:var(--graphite)}
+.drop.over{border-style:solid;border-color:var(--ink);background:#E7ECF3}
+.drop-icon{display:grid;place-items:center;width:56px;height:56px;margin-bottom:10px;background:var(--paper);border:1px solid var(--rule);border-radius:14px;font-size:26px;color:var(--ink)}
+.drop-title{margin:0;font-weight:650;font-size:16.5px}
+.drop-hint{margin:0 0 16px;max-width:40ch;color:var(--graphite);font-size:14px}
+.drop .btn{pointer-events:none}
+.note{display:flex;align-items:center;justify-content:center;gap:7px;margin:14px 0 0;font-size:13px;color:var(--graphite);text-align:center}
+.summary{display:grid;gap:14px}
+.proj .k{font-size:13px;color:var(--graphite)}
+.proj-name{margin:2px 0 3px;font-family:var(--f-display);font-size:27px;line-height:1.15;letter-spacing:-.02em;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border:1px solid var(--rule);border-radius:var(--r-md)}
+.stats>div{padding:12px 14px;min-width:0}
+.stats>div+div{border-left:1px solid var(--rule)}
+.stats dt{font-size:12.5px;color:var(--graphite)}
+.stats dd{margin:2px 0 0;font-size:22px;font-weight:650;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.line{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;color:var(--ink-2)}
+.line>.i{margin-top:2px;color:var(--graphite)}
+.check{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-2);cursor:pointer}
+.check input{flex:none;width:16px;height:16px;margin:3px 0 0;accent-color:var(--ink)}
+.alert{display:flex;gap:11px;padding:13px 15px;border:1px solid;border-radius:var(--r-md);font-size:14px}
+.alert>.i{font-size:19px;margin-top:1px}
+.alert-body{flex:1;min-width:0;display:grid;gap:4px}
+.alert-body strong{font-weight:650}
+.alert-body p{margin:0}
+.alert.error{background:var(--err-wash);border-color:#F2C4BF;color:#6E1A13}
+.alert.error>.i{color:var(--err)}
+.alert.warn{background:var(--warn-wash);border-color:#EFD39C;color:#573700}
+.alert.warn>.i{color:var(--warn)}
+.alert.info{background:var(--wash);border-color:var(--rule);color:var(--ink-2)}
+.alert.info>.i{color:var(--graphite)}
+.alert.ok{background:var(--ok-wash);border-color:#B9DFCC;color:#0A4D39}
+.alert.ok>.i{color:var(--ok)}
+.alert .check{margin-top:6px;color:inherit}
+.alert .btn{justify-self:start;margin-top:6px}
+.issues summary{width:fit-content;cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.issues ul{list-style:none;margin:8px 0 0;padding:0;max-height:220px;overflow:auto}
+.issues li{display:grid;gap:1px;padding:7px 0;border-top:1px solid rgba(23,33,49,.08)}
+.issues code{font-size:12.5px;word-break:break-all}
+.tree-box{border:1px solid var(--rule);border-radius:var(--r-md);overflow:hidden}
+.tree-head{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--wash);border-bottom:1px solid var(--rule);font-size:13.5px}
+.tree-head strong{font:650 13.5px/1.3 var(--f-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.tree-head .meta{margin-left:auto;color:var(--graphite);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tree-scroll{max-height:340px;overflow:auto;padding:6px 6px 8px}
+.tree{list-style:none;margin:0;padding:0 0 0 16px}
+.tree-scroll>.tree{padding-left:0}
+.row{display:flex;align-items:center;gap:7px;min-width:0;padding:3px 8px 3px 4px;border-radius:6px;font:13px/1.5 var(--f-mono)}
+.row:hover{background:var(--wash)}
+summary.row{cursor:pointer;list-style:none}
+summary.row::-webkit-details-marker{display:none}
+.row.leaf::before{content:"";width:1.15em;flex:none}
+.row .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+summary.row .n{font-weight:600}
+.row .count,.row .size{color:var(--faint);font:12px/1.5 var(--f-ui);font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .count{margin-left:auto;padding-left:12px}
+.row .size{min-width:64px;text-align:right}
+.row .n+.size{margin-left:auto}
+.chev{color:var(--faint);transition:transform .15s}
+details[open]>summary .chev{transform:rotate(90deg)}
+.k-dir{color:#66758C}.k-code{color:#2F55C9}.k-img{color:#0D7655}.k-font{color:#7E4CC2}.k-media{color:#B0502A}.k-doc{color:#596476}.k-arc{color:#8A5700}.k-other{color:#8A94A5}
+.progress{display:grid;gap:12px;padding:6px 0 2px}
+.p-head{display:flex;align-items:center;gap:10px;font-size:16px}
+.spinner{width:16px;height:16px;flex:none;border:2px solid var(--rule-2);border-top-color:var(--ink);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bar{height:8px;background:#E2E7EE;border-radius:99px;overflow:hidden}
+.bar>i{display:block;width:0;height:100%;background:var(--ink);border-radius:inherit;transition:width .2s ease-out}
+.p-line{margin:0;font-size:14px;font-variant-numeric:tabular-nums;min-height:1.4em}
+.steps{list-style:none;display:grid;gap:7px;margin:4px 0 0;padding:0;font-size:14px;color:var(--faint)}
+.steps li{display:flex;align-items:center;gap:10px}
+.steps .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor}
+.steps li.active{color:var(--ink);font-weight:600}
+.steps li.active .dot{background:currentColor;box-shadow:0 0 0 3px rgba(23,33,49,.12)}
+.steps li.done{color:var(--ok)}
+.steps li.done .dot{background:currentColor}
+.done-head{display:flex;align-items:center;gap:14px}
+.done-head h3{margin:0;font-family:var(--f-display);font-size:20px;letter-spacing:-.01em}
+.badge{display:grid;place-items:center;width:44px;height:44px;flex:none;border-radius:50%;font-size:22px}
+.badge.ok{background:var(--ok);color:#fff}
+.badge.ok svg{stroke-width:2.6}
+.badge.warn{background:var(--warn-wash);color:var(--warn);border:1px solid #EFD39C}
+.filecard{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--wash);border:1px solid var(--rule);border-radius:var(--r-md)}
+.filecard>.i{font-size:30px;color:var(--ink)}
+.fname{font:600 14px/1.35 var(--f-mono);word-break:break-all}
+.verify{display:flex;align-items:center;gap:8px;margin:0;font-weight:650;font-variant-numeric:tabular-nums}
+.verify.ok{color:var(--ok)}
+.verify.bad{color:var(--warn)}
+.verify .i{font-size:19px}
+.fp{padding:14px 16px 12px;border:1px solid var(--rule);border-radius:var(--r-md)}
+.fp-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px;margin-bottom:10px;font-size:13px;color:var(--graphite)}
+.fp-hex{font:600 13px/1 var(--f-mono);letter-spacing:.06em;color:var(--ink)}
+.fp-bars{display:block;width:100%;height:40px;color:var(--ink)}
+.fp-bars rect{transform-box:fill-box;transform-origin:50% 100%}
+.fp-note{margin:10px 0 0;font-size:12.5px;color:var(--graphite)}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:no-preference){.fp-bars.animate rect{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}}
+@media (prefers-reduced-motion:reduce){.spinner{animation-duration:2.4s}.bar>i,.chev,.btn,.drop{transition:none}}
+.foot{max-width:760px;margin:40px auto 0;text-align:center;font-size:13px;color:var(--graphite)}
+.foot p{margin:0}
+@media (max-width:940px){.cards{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.card-head,.card-body{padding-left:18px;padding-right:18px}.stats dd{font-size:19px}.actions>.btn{flex:1 1 100%}.row .count{display:none}}
+</style>
+</head>
+<body>
+<noscript><p style="font:16px/1.5 system-ui,sans-serif;padding:24px">Universal Project Builder needs JavaScript. Everything runs locally in this browser.</p></noscript>
+<template id="upb-shell">
+<div class="wrap">
+  <div class="banner" id="pkg-banner" hidden></div>
+  <header class="hero">
+    <svg class="mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M13 4.5h16.5l10 10V41a2.5 2.5 0 0 1-2.5 2.5H13A2.5 2.5 0 0 1 10.5 41V7A2.5 2.5 0 0 1 13 4.5z"/>
+      <path d="M29.5 4.5v10h10"/>
+      <circle cx="17.5" cy="19" r="2.4" fill="currentColor" stroke="none"/>
+      <path d="M17.5 21.5V34M17.5 27h5M17.5 34h5"/>
+      <rect x="22.5" y="24.5" width="10" height="5" rx="1.4"/>
+      <rect x="22.5" y="31.5" width="10" height="5" rx="1.4"/>
+    </svg>
+    <h1>Universal Project Builder</h1>
+    <p class="lead">Package an entire project into one file. Turn a ZIP into a single portable HTML file, then restore the exact folders and files on any computer.</p>
+    <ul class="facts">
+      <li><span class="i"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>Nothing leaves your browser</li>
+      <li><span class="i"><svg viewBox="0 0 24 24"><path d="M2 8.5a15.5 15.5 0 0 1 5-2.9M11 5.1a15.5 15.5 0 0 1 11 3.4M5.2 12.1a10.5 10.5 0 0 1 4.3-2.3M15.8 10.2a10.5 10.5 0 0 1 3 1.9M8.6 15.6a5.5 5.5 0 0 1 6.8 0M12 19.2h.01M3 3l18 18"/></svg></span>Works offline</li>
+      <li><span class="i"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg></span>Every file checked with SHA-256</li>
+    </ul>
+  </header>
+  <main class="cards">
+    <section class="card" id="create" aria-labelledby="create-title">
+      <div class="card-head">
+        <div class="flow" role="img" aria-label="ZIP to HTML"><span class="tag">ZIP</span><span class="i"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="tag solid">HTML</span></div>
+        <h2 id="create-title">Create Project File</h2>
+        <p>Upload a project ZIP and turn the entire project into one portable HTML file.</p>
+      </div>
+      <div class="card-body"></div>
+    </section>
+    <section class="card" id="extract" aria-labelledby="extract-title">
+      <div class="card-head">
+        <div class="flow" role="img" aria-label="HTML to folder"><span class="tag solid">HTML</span><span class="i"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="tag">Folder</span></div>
+        <h2 id="extract-title">Extract Project File</h2>
+        <p>Upload a project HTML file created by this tool and restore the complete project structure.</p>
+      </div>
+      <div class="card-body"></div>
+    </section>
+  </main>
+  <footer class="foot"><p>Packages use the Universal Project format 1.0: one HTML file that holds a manifest, every file, and a SHA-256 checksum for each. Folder extraction needs a browser with the File System Access API, such as Chrome or Edge. Any browser can download the ZIP.</p></footer>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+</div>
+</template>
+<div id="app"></div>
+<script id="upb-app">
+(() => {
+'use strict';
+/*
+  Universal Project Builder 1.0. Package format "universal-project-package" 1.0.
+  A package is one HTML file containing:
+    1. A prologue comment that identifies the format.
+    2. A copy of this application (style, markup, script), so a package can restore itself when opened.
+    3. A JSON manifest inside an inert script element of type application/json.
+    4. One inert script element per project file. Valid UTF-8 text is stored as a JSON string literal,
+       everything else as Base64. Every "<" in stored data is escaped as \u003c, so stored content can never
+       close an element, open a comment or be parsed as markup. Nothing stored is ever executed.
+  Each manifest entry records path, type, MIME type, size, encoding, SHA-256, CRC-32 and the byte offset and
+  length of its stored data, counted from the "<" that ends the manifest. That region has no line breaks,
+  so line-ending conversion of the package cannot shift it.
+*/
+const APP_NAME = 'Universal Project Builder';
+const APP_VERSION = '1.0';
+const FORMAT = 'universal-project-package';
+const FORMAT_VERSION = '1.0';
+const LT = '\x3c';
+const PROLOGUE_MARK = LT + '!-- ' + FORMAT + ' ';
+const MANIFEST_TAG = LT + 'script type="application/json" id="upb-manifest">';
+const BLOCK_OPEN = LT + 'script type="application/x-upb-file" id="';
+const END_SCRIPT = LT + '/script>';
+const WHOLE_READ_LIMIT = 256 * 1024 * 1024;
+const NOSCRIPT = '<noscript><p style="font:16px/1.5 system-ui,sans-serif;padding:24px">This project package needs JavaScript to restore its files. You can also upload it to project-builder.html.</p></noscript>';
+
+const enc = new TextEncoder();
+const dec = new TextDecoder('utf-8');
+const decStrict = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true });
+const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const byName = (a, b) => collator.compare(a.name, b.name);
+
+// Pristine copies of this app. Every package embeds them so it can restore itself when opened.
+const SELF = {
+  style: document.getElementById('upb-style').textContent,
+  shell: document.getElementById('upb-shell').innerHTML,
+  code: document.getElementById('upb-app').textContent
+};
+
+/* ---------- errors and cancellable jobs ---------- */
+class UserError extends Error { constructor(message, detail, items) { super(message); this.detail = detail || ''; this.items = items; } }
+class PackageError extends Error { constructor(message, detail) { super(message); this.detail = detail || ''; } }
+class Cancelled extends Error {}
+const notPackage = () => new PackageError('This is not a valid Universal Project package.', 'Choose an HTML file that was created with the Universal Project Builder.');
+const damaged = (why) => new PackageError('This project package is damaged.', why);
+const newJob = () => ({ cancelled: false, check() { if (this.cancelled) throw new Cancelled('Cancelled'); } });
+const describe = (e) => (e && e.name === 'RangeError') ? 'The browser ran out of memory. Try splitting the project into smaller ZIPs.' : (e && e.message) || String(e);
+
+/* ---------- small utilities ---------- */
+const $ = (sel, root) => (root || document).querySelector(sel);
+const dv = (u8) => new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+const readBlob = async (blob, a, b) => new Uint8Array(await blob.slice(a, b).arrayBuffer());
+const baseName = (p) => p.slice(p.lastIndexOf('/') + 1);
+const parentOf = (p) => { const i = p.lastIndexOf('/'); return i < 0 ? '' : p.slice(0, i); };
+const extOf = (p) => { const b = baseName(p), i = b.lastIndexOf('.'); return i > 0 ? b.slice(i + 1).toLowerCase() : ''; };
+const pl = (n, word) => n.toLocaleString() + ' ' + word + (n === 1 ? '' : 's');
+const isUint = (n) => Number.isSafeInteger(n) && n >= 0;
+const isSafeName = (s) => typeof s === 'string' && s.length > 0 && s.length <= 255 && s !== '.' && s !== '..' && !/[\/\\\u0000]/.test(s);
+const isSafePath = (p) => typeof p === 'string' && p.split('/').every(isSafeName);
+const escHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+function fmtBytes(n) {
+  if (n < 1024) return n + ' B';
+  const units = ['KB', 'MB', 'GB', 'TB'];
+  let i = -1;
+  do { n /= 1024; i++; } while (n >= 1024 && i < units.length - 1);
+  return (n >= 100 ? n.toFixed(0) : n.toFixed(1).replace(/\.0$/, '')) + ' ' + units[i];
+}
+function safeName(s) {
+  const t = String(s).replace(/[<>:"\/\\|?*\u0000-\u001f]/g, '_').replace(/[. ]+$/, '').trim();
+  return t || 'project';
+}
+function findBytes(hay, str, from) {
+  const n = enc.encode(str);
+  for (let i = hay.indexOf(n[0], from || 0); i !== -1 && i + n.length <= hay.length; i = hay.indexOf(n[0], i + 1)) {
+    let k = 1;
+    while (k < n.length && hay[i + k] === n[k]) k++;
+    if (k === n.length) return i;
+  }
+  return -1;
+}
+let lastYield = 0;
+async function tick() {
+  if (performance.now() - lastYield > 30) { await new Promise((r) => setTimeout(r, 0)); lastYield = performance.now(); }
+}
+async function pool(count, limit, fn) {
+  let next = 0;
+  const worker = async () => { while (next < count) await fn(next++); };
+  await Promise.all(Array.from({ length: Math.min(limit, count) }, worker));
+}
+
+/* ---------- file types ---------- */
+const MIME = {};
+('html,htm,xhtml:text/html css:text/css js,mjs,cjs:text/javascript json,map,jsonc:application/json xml:application/xml ' +
+ 'svg:image/svg+xml csv:text/csv md,markdown:text/markdown txt,log:text/plain ts,tsx:text/typescript jsx:text/jsx ' +
+ 'yml,yaml:application/yaml toml:application/toml webmanifest:application/manifest+json png:image/png jpg,jpeg:image/jpeg ' +
+ 'gif:image/gif webp:image/webp avif:image/avif bmp:image/bmp ico:image/x-icon tif,tiff:image/tiff heic:image/heic ' +
+ 'woff:font/woff woff2:font/woff2 ttf:font/ttf otf:font/otf eot:application/vnd.ms-fontobject mp3:audio/mpeg wav:audio/wav ' +
+ 'ogg,oga:audio/ogg m4a:audio/mp4 flac:audio/flac aac:audio/aac opus:audio/opus mp4,m4v:video/mp4 webm:video/webm ' +
+ 'ogv:video/ogg mov:video/quicktime avi:video/x-msvideo mkv:video/x-matroska pdf:application/pdf zip:application/zip ' +
+ 'gz,tgz:application/gzip wasm:application/wasm vtt:text/vtt ics:text/calendar sh:application/x-sh py:text/x-python')
+  .split(' ').forEach((pair) => { const [exts, type] = pair.split(':'); exts.split(',').forEach((x) => { MIME[x] = type; }); });
+const wordSet = (s) => new Set(s.split(' '));
+const BINARY_EXT = wordSet('png jpg jpeg gif webp avif bmp ico icns tif tiff psd heic heif woff woff2 ttf otf eot mp3 wav ogg oga m4a flac aac opus mp4 m4v webm ogv mov avi mkv pdf zip gz tgz bz2 xz 7z rar jar wasm exe dll so dylib bin dat class pyc o a lib db sqlite sqlite3 doc docx xls xlsx ppt pptx odt ods odp epub apk dmg iso');
+const STORED_EXT = wordSet('png jpg jpeg gif webp avif heic heif woff woff2 mp3 ogg oga m4a flac aac opus mp4 m4v webm ogv mov mkv zip gz tgz bz2 xz 7z rar jar docx xlsx pptx odt ods odp epub apk');
+const KIND = {};
+[['code', 'html htm xhtml css scss sass less js mjs cjs jsx ts tsx json jsonc map xml vue svelte astro php py rb go rs java c h cpp cs sh bat ps1 sql yml yaml toml ini webmanifest'],
+ ['img', 'png jpg jpeg gif webp avif bmp ico icns tif tiff svg heic heif psd'],
+ ['font', 'woff woff2 ttf otf eot'],
+ ['media', 'mp3 wav ogg oga m4a flac aac opus mp4 m4v webm ogv mov avi mkv vtt'],
+ ['doc', 'md markdown txt csv tsv pdf log rtf doc docx xls xlsx ppt pptx'],
+ ['arc', 'zip gz tgz bz2 xz 7z rar jar']].forEach(([kind, list]) => list.split(' ').forEach((x) => { KIND[x] = kind; }));
+const kindOf = (name) => KIND[extOf(name)] || 'other';
+const mimeOf = (path, isText) => MIME[extOf(path)] || (isText ? 'text/plain' : 'application/octet-stream');
+
+// Text = valid UTF-8 without binary control bytes. Only such files are stored as text, so the
+// round trip is byte-exact. Everything else is stored as Base64.
+function classify(path, bytes) {
+  if (BINARY_EXT.has(extOf(path))) return 'binary';
+  const n = Math.min(bytes.length, 65536);
+  for (let i = 0; i < n; i++) {
+    const b = bytes[i];
+    if (b < 32 && b !== 9 && b !== 10 && b !== 12 && b !== 13 && b !== 27) return 'binary';
+  }
+  try { decStrict.decode(bytes); return 'text'; } catch (e) { return 'binary'; }
+}
+
+/* ---------- checksums ---------- */
+const CRC_TABLE = new Uint32Array(256);
+for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; CRC_TABLE[n] = c; }
+function crc32(u8) {
+  let c = -1;
+  for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 255] ^ (c >>> 8);
+  return (c ^ -1) >>> 0;
+}
+const HEX = Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, '0'));
+const toHex = (u8) => { let s = ''; for (let i = 0; i < u8.length; i++) s += HEX[u8[i]]; return s; };
+const SUBTLE = globalThis.crypto && globalThis.crypto.subtle;
+async function sha256(u8) {
+  if (SUBTLE) { try { return toHex(new Uint8Array(await SUBTLE.digest('SHA-256', u8))); } catch (e) { /* use the built-in fallback */ } }
+  return toHex(sha256js(u8));
+}
+const SHA_K = new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]);
+function sha256js(data) {
+  const H = new Uint32Array([0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]);
+  const W = new Uint32Array(64), len = data.length, total = Math.ceil((len + 9) / 64) * 64;
+  const buf = new Uint8Array(total); buf.set(data); buf[len] = 0x80;
+  const v = new DataView(buf.buffer);
+  v.setUint32(total - 8, Math.floor(len / 0x20000000)); v.setUint32(total - 4, (len * 8) >>> 0);
+  for (let off = 0; off < total; off += 64) {
+    for (let i = 0; i < 16; i++) W[i] = v.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const a = W[i - 15], b = W[i - 2];
+      const s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+      const s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+      W[i] = W[i - 16] + s0 + W[i - 7] + s1;
+    }
+    let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (let i = 0; i < 64; i++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const t1 = (h + S1 + ((e & f) ^ (~e & g)) + SHA_K[i] + W[i]) | 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const t2 = (S0 + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H[0] += a; H[1] += b; H[2] += c; H[3] += d; H[4] += e; H[5] += f; H[6] += g; H[7] += h;
+  }
+  const out = new Uint8Array(32), ov = new DataView(out.buffer);
+  for (let i = 0; i < 8; i++) ov.setUint32(i * 4, H[i]);
+  return out;
+}
+
+/* ---------- Base64 (binary-safe, works directly on bytes) ---------- */
+const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+const B64E = Uint8Array.from(B64, (ch) => ch.charCodeAt(0));
+const B64D = new Int16Array(256).fill(-1);
+for (let i = 0; i < 64; i++) B64D[B64.charCodeAt(i)] = i;
+function b64encode(u8) {
+  const n = u8.length, out = new Uint8Array(Math.ceil(n / 3) * 4);
+  let i = 0, o = 0;
+  for (; i + 2 < n; i += 3) {
+    const v = (u8[i] << 16) | (u8[i + 1] << 8) | u8[i + 2];
+    out[o++] = B64E[v >> 18]; out[o++] = B64E[(v >> 12) & 63]; out[o++] = B64E[(v >> 6) & 63]; out[o++] = B64E[v & 63];
+  }
+  if (i < n) {
+    const two = i + 1 < n, v = (u8[i] << 16) | (two ? u8[i + 1] << 8 : 0);
+    out[o++] = B64E[v >> 18]; out[o++] = B64E[(v >> 12) & 63]; out[o++] = two ? B64E[(v >> 6) & 63] : 61; out[o++] = 61;
+  }
+  return out;
+}
+function b64decode(src) {
+  let n = src.length;
+  while (n > 0 && src[n - 1] === 61) n--;
+  const out = new Uint8Array(Math.floor(n * 3 / 4));
+  let i = 0, o = 0;
+  for (; i + 3 < n; i += 4) {
+    const a = B64D[src[i]], b = B64D[src[i + 1]], c = B64D[src[i + 2]], d = B64D[src[i + 3]];
+    if ((a | b | c | d) < 0) throw new Error('The stored Base64 data is invalid.');
+    const v = (a << 18) | (b << 12) | (c << 6) | d;
+    out[o++] = v >> 16; out[o++] = (v >> 8) & 255; out[o++] = v & 255;
+  }
+  const r = n - i;
+  if (r === 1) throw new Error('The stored Base64 data is invalid.');
+  if (r > 1) {
+    const a = B64D[src[i]], b = B64D[src[i + 1]], c = r === 3 ? B64D[src[i + 2]] : 0;
+    if ((a | b | c) < 0) throw new Error('The stored Base64 data is invalid.');
+    const v = (a << 18) | (b << 12) | (c << 6);
+    out[o++] = v >> 16;
+    if (r === 3) out[o++] = (v >> 8) & 255;
+  }
+  return out;
+}
+
+/* ---------- Deflate: native streams with a built-in inflate fallback ---------- */
+const LBASE = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258];
+const LEXT = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0];
+const DBASE = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577];
+const DEXT = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13];
+const CLORDER = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
+function huff(lengths) {
+  const count = new Uint16Array(16), offs = new Uint16Array(16), symbol = new Uint16Array(lengths.length);
+  for (let i = 0; i < lengths.length; i++) count[lengths[i]]++;
+  count[0] = 0;
+  for (let i = 1; i < 16; i++) offs[i] = offs[i - 1] + count[i - 1];
+  for (let i = 0; i < lengths.length; i++) if (lengths[i]) symbol[offs[lengths[i]]++] = i;
+  return { count, symbol };
+}
+function inflateJS(src, sizeHint) {
+  let out = new Uint8Array(sizeHint > 0 ? sizeHint : Math.max(1024, src.length * 3)), op = 0, ip = 0, bb = 0, bc = 0;
+  const bad = () => new Error('The compressed data is invalid.');
+  const bits = (n) => {
+    while (bc < n) { if (ip >= src.length) throw new Error('The compressed data ends unexpectedly.'); bb |= src[ip++] << bc; bc += 8; }
+    const v = bb & ((1 << n) - 1); bb >>>= n; bc -= n; return v;
+  };
+  const room = (n) => { if (op + n > out.length) { const o = new Uint8Array(Math.max(out.length * 2, op + n)); o.set(out); out = o; } };
+  const decode = (t) => {
+    let code = 0, first = 0, index = 0;
+    for (let len = 1; len < 16; len++) {
+      code |= bits(1);
+      const c = t.count[len];
+      if (code - c < first) return t.symbol[index + (code - first)];
+      index += c; first += c; first <<= 1; code <<= 1;
+    }
+    throw bad();
+  };
+  let fixedL = null, fixedD = null;
+  for (let last = 0; !last;) {
+    last = bits(1);
+    const type = bits(2);
+    if (type === 0) {
+      bb = 0; bc = 0;
+      if (ip + 4 > src.length) throw bad();
+      const len = src[ip] | (src[ip + 1] << 8), nlen = src[ip + 2] | (src[ip + 3] << 8); ip += 4;
+      if (len !== (~nlen & 0xFFFF) || ip + len > src.length) throw bad();
+      room(len); out.set(src.subarray(ip, ip + len), op); op += len; ip += len;
+      continue;
+    }
+    let lt, dt;
+    if (type === 1) {
+      if (!fixedL) { const l = new Uint8Array(288); l.fill(8, 0, 144); l.fill(9, 144, 256); l.fill(7, 256, 280); l.fill(8, 280); fixedL = huff(l); fixedD = huff(new Uint8Array(30).fill(5)); }
+      lt = fixedL; dt = fixedD;
+    } else if (type === 2) {
+      const nl = bits(5) + 257, nd = bits(5) + 1, nc = bits(4) + 4, cl = new Uint8Array(19);
+      for (let i = 0; i < nc; i++) cl[CLORDER[i]] = bits(3);
+      const ct = huff(cl), lens = new Uint8Array(nl + nd);
+      for (let i = 0; i < nl + nd;) {
+        const s = decode(ct);
+        if (s < 16) { lens[i++] = s; continue; }
+        let rep, val = 0;
+        if (s === 16) { if (!i) throw bad(); val = lens[i - 1]; rep = 3 + bits(2); }
+        else if (s === 17) rep = 3 + bits(3);
+        else rep = 11 + bits(7);
+        if (i + rep > nl + nd) throw bad();
+        lens.fill(val, i, i + rep); i += rep;
+      }
+      lt = huff(lens.subarray(0, nl)); dt = huff(lens.subarray(nl));
+    } else throw bad();
+    for (;;) {
+      let s = decode(lt);
+      if (s < 256) { room(1); out[op++] = s; continue; }
+      if (s === 256) break;
+      s -= 257; if (s >= 29) throw bad();
+      const len = LBASE[s] + bits(LEXT[s]);
+      const ds = decode(dt); if (ds >= 30) throw bad();
+      const dist = DBASE[ds] + bits(DEXT[ds]);
+      if (dist > op) throw bad();
+      room(len);
+      for (let k = 0; k < len; k++, op++) out[op] = out[op - dist];
+    }
+  }
+  return out.subarray(0, op);
+}
+const streamOf = (u8) => new ReadableStream({ start(c) { c.enqueue(u8); c.close(); } });
+const supports = (Ctor) => { try { new Ctor('deflate-raw'); return true; } catch (e) { return false; } };
+let canInflate = null, canDeflate = null;
+async function inflate(data, size) {
+  if (canInflate === null) canInflate = typeof DecompressionStream === 'function' && supports(DecompressionStream);
+  if (canInflate) {
+    try { return new Uint8Array(await new Response(streamOf(data).pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer()); }
+    catch (e) { /* fall back to the built-in decoder, which also tolerates trailing bytes */ }
+  }
+  return inflateJS(data, size);
+}
+async function deflate(data) {
+  if (canDeflate === null) canDeflate = typeof CompressionStream === 'function' && supports(CompressionStream);
+  if (!canDeflate) return null;
+  try { return new Uint8Array(await new Response(streamOf(data).pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer()); }
+  catch (e) { return null; }
+}
+
+/* ---------- ZIP reading ---------- */
+const METHODS = { 1: 'Shrink', 6: 'Implode', 9: 'Deflate64', 12: 'BZIP2', 14: 'LZMA', 93: 'Zstandard', 95: 'XZ', 98: 'PPMd', 99: 'AES encryption' };
+const CP437 = 'ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥₧ƒáíóúñÑªº¿⌐¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u00A0';
+function decodeName(b, flags) {
+  if (flags & 0x800) return dec.decode(b);
+  try { return decStrict.decode(b); } catch (e) { /* legacy encoding */ }
+  let s = '';
+  for (let i = 0; i < b.length; i++) s += b[i] < 128 ? String.fromCharCode(b[i]) : CP437[b[i] - 128];
+  return s;
+}
+async function zipOpen(file) {
+  let src;
+  if (file.size <= WHOLE_READ_LIMIT) {
+    const buf = new Uint8Array(await file.arrayBuffer());
+    src = { read: async (a, b) => buf.subarray(a, Math.min(b, buf.length)) };
+  } else src = { read: (a, b) => readBlob(file, a, b) };
+  const size = file.size;
+  if (size < 22) throw new UserError('The file is too small to be a ZIP archive.');
+  const tailAt = Math.max(0, size - 65557 - 20);
+  const tail = await src.read(tailAt, size), tv = dv(tail);
+  let e = -1;
+  for (let i = tail.length - 22; i >= 0; i--) if (tv.getUint32(i, true) === 0x06054b50) { e = i; break; }
+  if (e < 0) throw new UserError('This file is not a ZIP archive, or it is damaged (its directory could not be found).');
+  let total = tv.getUint16(e + 10, true), cdSize = tv.getUint32(e + 12, true), cdOff = tv.getUint32(e + 16, true), cdEnd = tailAt + e;
+  if (e >= 20 && tv.getUint32(e - 20, true) === 0x07064b50) {
+    const at = Number(tv.getBigUint64(e - 12, true)), z = await src.read(at, at + 56);
+    if (z.length === 56 && dv(z).getUint32(0, true) === 0x06064b50) {
+      const zv = dv(z);
+      total = Number(zv.getBigUint64(32, true)); cdSize = Number(zv.getBigUint64(40, true)); cdOff = Number(zv.getBigUint64(48, true)); cdEnd = at;
+    }
+  }
+  const isCen = (u8) => u8.length >= 46 && dv(u8).getUint32(0, true) === 0x02014b50;
+  let shift = 0, cd = await src.read(cdOff, cdOff + cdSize);
+  if (total && !isCen(cd)) {
+    // Tolerate data placed in front of the archive (for example self-extractors).
+    const alt = cdEnd - cdSize, cd2 = alt >= 0 ? await src.read(alt, alt + cdSize) : new Uint8Array(0);
+    if (!isCen(cd2)) throw new UserError('The ZIP archive is damaged (its central directory cannot be read).');
+    shift = alt - cdOff; cd = cd2;
+  }
+  const cv = dv(cd), entries = [];
+  for (let p = 0; p + 46 <= cd.length && cv.getUint32(p, true) === 0x02014b50;) {
+    const madeBy = cv.getUint16(p + 4, true), flags = cv.getUint16(p + 8, true), method = cv.getUint16(p + 10, true);
+    const time = cv.getUint16(p + 12, true), date = cv.getUint16(p + 14, true), crc = cv.getUint32(p + 16, true);
+    let csize = cv.getUint32(p + 20, true), usize = cv.getUint32(p + 24, true), off = cv.getUint32(p + 42, true);
+    const nLen = cv.getUint16(p + 28, true), xLen = cv.getUint16(p + 30, true), cLen = cv.getUint16(p + 32, true), ext = cv.getUint32(p + 38, true);
+    const nameBytes = cd.subarray(p + 46, p + 46 + nLen), extra = cd.subarray(p + 46 + nLen, p + 46 + nLen + xLen);
+    let name = null;
+    for (let q = 0; q + 4 <= extra.length;) {
+      const id = extra[q] | (extra[q + 1] << 8), len = extra[q + 2] | (extra[q + 3] << 8);
+      const d = extra.subarray(q + 4, q + 4 + len), xv = dv(d);
+      if (id === 0x0001) {
+        let k = 0;
+        if (usize === 0xFFFFFFFF && k + 8 <= d.length) { usize = Number(xv.getBigUint64(k, true)); k += 8; }
+        if (csize === 0xFFFFFFFF && k + 8 <= d.length) { csize = Number(xv.getBigUint64(k, true)); k += 8; }
+        if (off === 0xFFFFFFFF && k + 8 <= d.length) { off = Number(xv.getBigUint64(k, true)); k += 8; }
+      } else if (id === 0x7075 && d.length >= 5 && d[0] === 1 && xv.getUint32(1, true) === crc32(nameBytes)) {
+        try { name = decStrict.decode(d.subarray(5)); } catch (err) { /* keep the main name */ }
+      }
+      q += 4 + len;
+    }
+    if (name === null) name = decodeName(nameBytes, flags);
+    const host = madeBy >> 8;
+    entries.push({ name, flags, method, time, date, crc, csize, usize, offset: off + shift, attr: ext & 0xFF, mode: (host === 3 || host === 19) ? ext >>> 16 : 0 });
+    p += 46 + nLen + xLen + cLen;
+  }
+  return { src, entries };
+}
+async function zipRead(src, e) {
+  if (e.flags & 1) throw new UserError('This file is encrypted (password-protected ZIP), which is not supported.');
+  if (e.method !== 0 && e.method !== 8) throw new UserError('Unsupported compression method: ' + (METHODS[e.method] || 'method ' + e.method) + '. Re-create the ZIP with standard Deflate compression.');
+  const lh = await src.read(e.offset, e.offset + 30);
+  if (lh.length < 30 || dv(lh).getUint32(0, true) !== 0x04034b50) throw new UserError('Its local header in the ZIP is missing or damaged.');
+  const start = e.offset + 30 + (lh[26] | (lh[27] << 8)) + (lh[28] | (lh[29] << 8));
+  const raw = await src.read(start, start + e.csize);
+  if (raw.length !== e.csize) throw new UserError('The ZIP archive is truncated.');
+  const out = e.method === 0 ? raw.slice() : await inflate(raw, e.usize);
+  if (out.length !== e.usize) throw new UserError(`Size mismatch: expected ${e.usize.toLocaleString()} bytes, got ${out.length.toLocaleString()}.`);
+  if (crc32(out) !== e.crc) throw new UserError('CRC-32 check failed. The data inside the ZIP is corrupted.');
+  return out;
+}
+const isDirEntry = (e) => /[\/\\]$/.test(e.name) || (e.usize === 0 && ((e.attr & 0x10) !== 0 || (e.mode & 0xF000) === 0x4000));
+function normPath(raw) {
+  const parts = [];
+  for (const seg of raw.replace(/\\/g, '/').split('/')) {
+    if (seg === '' || seg === '.') continue;
+    if (seg === '..') return { error: 'The path points outside the project folder (".."), so it was rejected for safety.' };
+    if (seg.indexOf('\u0000') !== -1) return { error: 'The path contains invalid characters.' };
+    parts.push(seg);
+  }
+  return { path: parts.join('/') };
+}
+const dosToIso = (time, date) => {
+  const mo = (date >> 5) & 15, d = date & 31, p = (n) => String(n).padStart(2, '0');
+  if (!mo || mo > 12 || !d) return undefined;
+  return `${(date >> 9) + 1980}-${p(mo)}-${p(d)}T${p(time >> 11)}:${p((time >> 5) & 63)}:${p((time & 31) * 2)}`;
+};
+
+// Reads, decompresses, CRC-checks and hashes every file in the ZIP. Failures are collected, never skipped silently.
+async function analyzeZip(file, job, onProgress) {
+  const { src, entries } = await zipOpen(file);
+  const an = { zipName: file.name, zipSize: file.size, files: [], dirs: [], errors: [], warnings: [] };
+  const byPath = new Map();
+  for (const e of entries) {
+    const n = normPath(e.name);
+    if (n.error) { an.errors.push({ path: e.name, message: n.error }); continue; }
+    if (!n.path) continue;
+    if (isDirEntry(e)) { an.dirs.push(n.path); continue; }
+    if (byPath.has(n.path)) an.warnings.push({ path: n.path, message: 'This path appears more than once in the ZIP. The last copy is used.' });
+    byPath.set(n.path, e);
+  }
+  const list = [...byPath], out = new Array(list.length);
+  const totalBytes = list.reduce((s, x) => s + x[1].usize, 0);
+  let done = 0, doneBytes = 0;
+  onProgress(0, list.length, 0, totalBytes);
+  await pool(list.length, 4, async (i) => {
+    job.check();
+    const [path, e] = list[i];
+    try {
+      const bytes = await zipRead(src, e);
+      const type = classify(path, bytes);
+      out[i] = { path, bytes, size: bytes.length, crc: e.crc, sha256: await sha256(bytes), type, mime: mimeOf(path, type === 'text'), modified: dosToIso(e.time, e.date), mode: e.mode || 0 };
+    } catch (err) {
+      if (err instanceof Cancelled) throw err;
+      an.errors.push({ path, message: err instanceof UserError ? err.message : 'Could not be read: ' + describe(err) });
+    }
+    done++; doneBytes += e.usize;
+    onProgress(done, list.length, doneBytes, totalBytes);
+    await tick();
+  });
+  an.files = out.filter(Boolean);
+  an.errors.sort((a, b) => collator.compare(a.path, b.path));
+  return an;
+}
+
+/* ---------- project model: root detection, folders, conflicts ---------- */
+const isMacMeta = (p) => p === '__MACOSX' || p.startsWith('__MACOSX/') || baseName(p) === '.DS_Store';
+function addParents(set, p) { for (let i = p.indexOf('/'); i !== -1; i = p.indexOf('/', i + 1)) set.add(p.slice(0, i)); }
+function buildProject(an, excludeMac) {
+  const keep = (p) => !(excludeMac && isMacMeta(p));
+  let files = an.files.filter((f) => keep(f.path));
+  const dirs = an.dirs.filter(keep), errors = an.errors.filter((x) => keep(x.path)), warnings = an.warnings.filter((x) => keep(x.path));
+  const macCount = an.files.filter((f) => isMacMeta(f.path)).length + an.dirs.filter(isMacMeta).length;
+  // A single top-level folder that wraps everything is the project root.
+  const tops = new Set();
+  for (const f of files) tops.add(f.path.split('/')[0]);
+  for (const d of dirs) tops.add(d.split('/')[0]);
+  let root = null;
+  if (tops.size === 1) { const t = [...tops][0]; if (!files.some((f) => f.path === t)) root = t; }
+  const zipBase = an.zipName.replace(/\.zip$/i, '') || 'project';
+  const rel = (p) => (root ? (p === root ? '' : p.slice(root.length + 1)) : p);
+  files = files.map((f) => Object.assign({}, f, { rel: rel(f.path) }));
+  const folders = new Set();
+  for (const d of dirs) { const r = rel(d); if (r) { folders.add(r); addParents(folders, r); } }
+  for (const f of files) addParents(folders, f.rel);
+  const conflicts = new Set(files.filter((f) => folders.has(f.rel)));
+  if (conflicts.size) {
+    files = files.filter((f) => !conflicts.has(f));
+    for (const f of conflicts) errors.push({ path: f.path, message: 'A file and a folder in the ZIP have this same path.' });
+  }
+  const seen = new Map();
+  for (const p of [...folders, ...files.map((f) => f.rel)]) {
+    const k = p.toLowerCase();
+    if (seen.has(k)) warnings.push({ path: p, message: `Differs from “${seen.get(k)}” only in letter case. On Windows and macOS one may overwrite the other.` });
+    else seen.set(k, p);
+  }
+  return {
+    zipName: an.zipName, zipBase, projectName: root || zipBase, rootFolder: root || safeName(zipBase), zipHasRoot: !!root,
+    downloadName: safeName(zipBase) + '-builder.html', files, folders: [...folders].sort(), errors, warnings, macCount, excludeMac,
+    totalSize: files.reduce((s, f) => s + f.size, 0)
+  };
+}
+// Same project content gives the same fingerprint when packing and when extracting.
+async function fingerprint(files, folders) {
+  const lines = files.map((f) => f.path + '\t' + f.size + '\t' + f.sha256).sort();
+  return sha256(enc.encode(folders.slice().sort().map((d) => d + '/').join('\n') + '\n' + lines.join('\n')));
+}
+
+/* ---------- package writing ---------- */
+async function generatePackage(p, job, ui) {
+  const region = [], recs = [];
+  let pos = 0;
+  const add = (x) => { region.push(x); pos += x.length; }; // strings here are ASCII, so length equals bytes
+  add(END_SCRIPT); // closes the manifest; its "<" is offset 0 of the data region
+  ui.step(0);
+  let doneBytes = 0;
+  for (let i = 0; i < p.files.length; i++) {
+    job.check();
+    const f = p.files[i], id = 'upb-f' + i, text = f.type === 'text';
+    const data = text ? enc.encode(JSON.stringify(decStrict.decode(f.bytes)).replace(/</g, '\\u003c')) : b64encode(f.bytes);
+    add(BLOCK_OPEN + id + '">');
+    const offset = pos;
+    add(data); add(END_SCRIPT);
+    const rec = { path: f.rel, type: f.type, mime: f.mime, size: f.size, encoding: text ? 'utf-8' : 'base64', storage: text ? 'json-string' : 'base64', sha256: f.sha256, crc32: f.crc.toString(16).padStart(8, '0'), block: id, offset, length: data.length };
+    if (f.modified) rec.modified = f.modified;
+    if (f.mode) rec.mode = f.mode;
+    recs.push(rec);
+    doneBytes += f.size;
+    ui.set(p.totalSize ? doneBytes / p.totalSize : (i + 1) / p.files.length, `Encoding assets… ${(i + 1).toLocaleString()} / ${p.files.length.toLocaleString()} files`, `${fmtBytes(doneBytes)} / ${fmtBytes(p.totalSize)}`);
+    await tick();
+  }
+  ui.step(1); ui.set(1, 'Building manifest…', '', true);
+  await tick();
+  const manifest = {
+    format: FORMAT, version: FORMAT_VERSION, generator: APP_NAME + ' ' + APP_VERSION, created: new Date().toISOString(),
+    projectName: p.projectName, rootFolder: p.rootFolder, zipHasRoot: p.zipHasRoot, sourceZip: p.zipName,
+    stats: { files: recs.length, folders: p.folders.length, bytes: p.totalSize },
+    integrity: { algorithm: 'SHA-256', scope: 'Each file records the SHA-256 and CRC-32 of its original bytes.' },
+    storage: { text: 'Valid UTF-8 stored as a JSON string literal', binary: 'Base64', offsets: 'Byte offset and length of each stored block, counted from the end of this manifest' },
+    folders: p.folders, files: recs,
+    excluded: { macMetadata: p.excludeMac ? p.macCount : 0, unreadable: p.errors.map((e) => ({ path: e.path, reason: e.message })) }
+  };
+  const manifestJson = JSON.stringify(manifest).replace(/</g, '\\u003c');
+  ui.step(2); ui.set(1, 'Generating HTML…', '', true);
+  await tick();
+  const head = [
+    '<!DOCTYPE html>\n', PROLOGUE_MARK, 'v', FORMAT_VERSION, ' | Created with ', APP_NAME,
+    ' | Open this file in a browser to restore the project, or upload it to project-builder.html --\x3e\n',
+    '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<meta name="generator" content="', APP_NAME, ' ', APP_VERSION, '"><meta name="upb-package" content="', FORMAT_VERSION, '">',
+    '<title>Project package: ', escHtml(p.projectName), '</title><style id="upb-style">', SELF.style, '</style></head><body>', NOSCRIPT,
+    '<template id="upb-shell">', SELF.shell, '</template><div id="app"></div>',
+    LT, 'script id="upb-app">', SELF.code, END_SCRIPT, '\n', MANIFEST_TAG, manifestJson
+  ].join('');
+  const blob = new Blob([head, ...region, '\n</body>\n</html>\n'], { type: 'text/html' });
+  // Self-test: read the finished package back exactly as an upload would and check every file.
+  ui.step(3); ui.set(0, 'Verifying package…', '', true);
+  const pkg = await openPackageBlob(blob, p.downloadName);
+  const v = await verifyPackage(pkg, job, (d, t) => ui.set(d / t, `Verifying package… ${d.toLocaleString()} / ${t.toLocaleString()} files`, 'Reading the package back and checking every SHA-256'));
+  if (v.failed.length) throw new UserError('The package failed its self-test, so it is not offered for download.', 'Some files did not read back identically.', v.failed);
+  ui.step(4);
+  return { blob, name: p.downloadName, verified: v.verified, total: recs.length, fingerprint: await fingerprint(recs, p.folders) };
+}
+
+/* ---------- package reading ---------- */
+function validateManifest(m) {
+  if (!m || typeof m !== 'object' || m.format !== FORMAT) throw notPackage();
+  const major = parseInt(m.version, 10);
+  if (!(major >= 1)) throw damaged('Its format version is missing.');
+  if (major > 1) throw new PackageError('This package was made with a newer version of the builder.', `It uses format ${m.version}, and this builder reads format 1.x. Open the package file itself in a browser, or use a newer project-builder.html.`);
+  if (typeof m.projectName !== 'string' || !isSafeName(m.rootFolder) || !Array.isArray(m.files) || !Array.isArray(m.folders)) throw damaged('Its manifest is incomplete.');
+  for (const d of m.folders) if (!isSafePath(d)) throw damaged('It lists an invalid folder path.');
+  const seen = new Set();
+  for (const f of m.files) {
+    const ok = f && isSafePath(f.path) && !seen.has(f.path) && isUint(f.size) && isUint(f.offset) && isUint(f.length) &&
+      (f.storage === 'base64' || f.storage === 'json-string') && /^upb-f\d+$/.test(f.block || '') && (f.sha256 == null || /^[0-9a-f]{64}$/.test(f.sha256));
+    if (!ok) throw damaged('It contains an invalid file entry' + (f && typeof f.path === 'string' ? ': ' + f.path : '.'));
+    seen.add(f.path);
+  }
+}
+function decodeStored(f, data) {
+  let bytes;
+  if (f.storage === 'base64') bytes = b64decode(typeof data === 'string' ? enc.encode(data) : data);
+  else {
+    const t = JSON.parse(typeof data === 'string' ? data : dec.decode(data));
+    if (typeof t !== 'string') throw new Error('The stored text is invalid.');
+    bytes = enc.encode(t);
+  }
+  if (bytes.length !== f.size) throw new Error(`Size mismatch: expected ${f.size.toLocaleString()} bytes, got ${bytes.length.toLocaleString()}.`);
+  return bytes;
+}
+// Reads a package file without ever loading it into a page: the HTML is parsed as bytes, never rendered or run.
+async function openPackageBlob(blob, fileName) {
+  if (blob.size < 200) throw notPackage();
+  let n = Math.min(blob.size, 1 << 20), head = await readBlob(blob, 0, n);
+  if (findBytes(head.subarray(0, 4096), PROLOGUE_MARK) < 0) throw notPackage();
+  let a = -1, b = -1;
+  for (;;) {
+    if (a < 0) a = findBytes(head, MANIFEST_TAG);
+    if (a >= 0) { b = head.indexOf(0x3C, a + MANIFEST_TAG.length); if (b >= 0) break; }
+    if (n >= blob.size) throw damaged('Its manifest is missing or incomplete. The file may have been cut short while downloading.');
+    n = Math.min(blob.size, n * 4); head = await readBlob(blob, 0, n);
+  }
+  let m;
+  try { m = JSON.parse(dec.decode(head.subarray(a + MANIFEST_TAG.length, b))); } catch (e) { throw damaged('Its manifest could not be read.'); }
+  validateManifest(m);
+  for (const f of m.files) if (f.offset < 1 || b + f.offset + f.length + 1 > blob.size) throw damaged('Some file data is missing. The file may have been cut short while downloading.');
+  return {
+    manifest: m, fileName, size: blob.size, embedded: false,
+    async read(f) {
+      const raw = await readBlob(blob, b + f.offset - 1, b + f.offset + f.length + 1);
+      if (raw[0] !== 0x3E || raw[raw.length - 1] !== 0x3C) throw new Error('The stored data is not where the manifest says it is. The package may have been edited.');
+      return decodeStored(f, raw.subarray(1, raw.length - 1));
+    }
+  };
+}
+// Used when a package file is opened directly in the browser: the data blocks are inert elements of this page.
+function openEmbedded() {
+  const el = document.getElementById('upb-manifest');
+  if (!el) return null;
+  let m;
+  try { m = JSON.parse(el.textContent); } catch (e) { throw damaged('Its manifest could not be read.'); }
+  validateManifest(m);
+  let fileName = 'this file';
+  try { fileName = decodeURIComponent(location.pathname.split('/').pop()) || fileName; } catch (e) { /* keep default */ }
+  return {
+    manifest: m, fileName, size: null, embedded: true,
+    async read(f) {
+      const node = document.getElementById(f.block);
+      if (!node || node.tagName !== 'SCRIPT') throw new Error('Its stored data block is missing.');
+      return decodeStored(f, node.textContent);
+    }
+  };
+}
+async function verifyPackage(pkg, job, onProgress) {
+  const files = pkg.manifest.files, failed = [];
+  let done = 0, verified = 0;
+  onProgress(0, files.length);
+  await pool(files.length, 4, async (i) => {
+    job.check();
+    const f = files[i];
+    try {
+      const bytes = await pkg.read(f);
+      if (f.sha256) { if (await sha256(bytes) !== f.sha256) throw new Error('Its SHA-256 checksum does not match the original.'); verified++; }
+    } catch (e) {
+      if (e instanceof Cancelled) throw e;
+      failed.push({ path: f.path, message: describe(e) });
+    }
+    onProgress(++done, files.length);
+    await tick();
+  });
+  failed.sort((x, y) => collator.compare(x.path, y.path));
+  return { verified, failed, total: files.length };
+}
+
+/* ---------- extraction to a folder (File System Access API) ---------- */
+function fsMessage(e) {
+  const n = e && e.name;
+  if (n === 'NotAllowedError' || n === 'SecurityError') return 'Permission to write here was denied.';
+  if (n === 'QuotaExceededError') return 'There is not enough free disk space.';
+  if (n === 'TypeMismatchError') return 'An item with this name already exists, but it is a file where a folder is needed, or the reverse.';
+  if (n === 'NoModificationAllowedError') return 'The existing file is locked or read-only.';
+  if (n === 'InvalidModificationError') return 'The existing item could not be replaced.';
+  if (n === 'TypeError' || n === 'InvalidCharacterError') return 'This name is not allowed by the browser or the operating system. ' + ((e && e.message) || '');
+  return describe(e);
+}
+async function extractToFolder(pkg, dest, job, onProgress) {
+  const m = pkg.manifest;
+  const r = { written: 0, verified: 0, hashed: 0, folders: 0, errors: [], mismatched: [], cancelled: false, location: dest.name + '/' + m.rootFolder };
+  const rootDir = await dest.getDirectoryHandle(m.rootFolder, { create: true });
+  const dirs = new Map([['', Promise.resolve(rootDir)]]);
+  const dirAt = (p) => {
+    let d = dirs.get(p);
+    if (!d) { d = dirAt(parentOf(p)).then((hd) => hd.getDirectoryHandle(baseName(p), { create: true })); dirs.set(p, d); }
+    return d;
+  };
+  let done = 0;
+  onProgress(0, m.files.length);
+  try {
+    for (const d of m.folders) {
+      job.check();
+      try { await dirAt(d); r.folders++; } catch (e) { r.errors.push({ path: d + '/', message: fsMessage(e) }); }
+    }
+    await pool(m.files.length, 4, async (i) => {
+      job.check();
+      const f = m.files[i];
+      try {
+        const bytes = await pkg.read(f);
+        const dir = await dirAt(parentOf(f.path));
+        const fh = await dir.getFileHandle(baseName(f.path), { create: true });
+        const w = await fh.createWritable();
+        try { await w.write(bytes); await w.close(); } catch (e) { try { await w.abort(); } catch (x) { /* ignore */ } throw e; }
+        r.written++;
+        if (f.sha256) {
+          r.hashed++;
+          const back = new Uint8Array(await (await fh.getFile()).arrayBuffer());
+          if (back.length === f.size && await sha256(back) === f.sha256) r.verified++;
+          else r.mismatched.push({ path: f.path, message: 'The file on disk does not match the original (SHA-256 mismatch).' });
+        }
+      } catch (e) {
+        if (e instanceof Cancelled) throw e;
+        r.errors.push({ path: f.path, message: fsMessage(e) });
+      }
+      onProgress(++done, m.files.length);
+      await tick();
+    });
+  } catch (e) {
+    if (!(e instanceof Cancelled)) throw e;
+    r.cancelled = true;
+  }
+  return r;
+}
+
+/* ---------- ZIP writing ---------- */
+const dosTime = (d) => ({ time: (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date: ((Math.max(1980, d.getFullYear()) - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate() });
+function isoToDos(s) {
+  const m = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)/.exec(typeof s === 'string' ? s : '');
+  if (!m) return dosTime(new Date());
+  const [y, mo, d, hh, mi, ss] = m.slice(1).map(Number);
+  if (y < 1980 || y > 2107) return dosTime(new Date());
+  return { time: (hh << 11) | (mi << 5) | (ss >> 1), date: ((y - 1980) << 9) | (mo << 5) | d };
+}
+function unixAttr(mode) {
+  let md = (Number(mode) >>> 0) & 0xFFFF;
+  if (!(md & 0xF000)) md = 0o100000 | ((md & 0o7777) || 0o644);
+  return (md << 16) >>> 0;
+}
+// Rebuilds the project ZIP: same paths, same root folder (if the original had one), timestamps and Unix modes.
+async function buildZip(pkg, job, onProgress) {
+  const m = pkg.manifest, prefix = m.zipHasRoot ? m.rootFolder + '/' : '';
+  const parts = [], central = [];
+  let offset = 0;
+  const add = (name, data, method, crc, size, dos, attr) => {
+    const nb = enc.encode(name), lh = new Uint8Array(30 + nb.length), l = dv(lh), ch = new Uint8Array(46 + nb.length), c = dv(ch);
+    l.setUint32(0, 0x04034b50, true); l.setUint16(4, 20, true); l.setUint16(6, 0x0800, true); l.setUint16(8, method, true);
+    l.setUint16(10, dos.time, true); l.setUint16(12, dos.date, true); l.setUint32(14, crc, true);
+    l.setUint32(18, data.length, true); l.setUint32(22, size, true); l.setUint16(26, nb.length, true); lh.set(nb, 30);
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 0x0314, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true);
+    c.setUint16(10, method, true); c.setUint16(12, dos.time, true); c.setUint16(14, dos.date, true); c.setUint32(16, crc, true);
+    c.setUint32(20, data.length, true); c.setUint32(24, size, true); c.setUint16(28, nb.length, true);
+    c.setUint32(38, attr >>> 0, true); c.setUint32(42, offset, true); ch.set(nb, 46);
+    parts.push(lh); if (data.length) parts.push(data); central.push(ch);
+    offset += lh.length + data.length;
+    if (offset > 0xFFFFFFFF) throw new UserError('The project is too large to download as a ZIP from the browser (over 4 GB). Use Extract Project instead.');
+  };
+  const now = dosTime(new Date()), empty = new Uint8Array(0);
+  const dirSet = new Set(m.zipHasRoot ? [m.rootFolder] : []);
+  for (const d of m.folders) dirSet.add(prefix + d);
+  for (const d of [...dirSet].sort()) add(d + '/', empty, 0, 0, 0, now, (0o40755 << 16) | 0x10);
+  let done = 0;
+  onProgress(0, m.files.length);
+  for (const f of m.files) {
+    job.check();
+    const bytes = await pkg.read(f);
+    let data = bytes, method = 0;
+    if (bytes.length > 64 && !STORED_EXT.has(extOf(f.path))) {
+      const z = await deflate(bytes);
+      if (z && z.length < bytes.length) { data = z; method = 8; }
+    }
+    add(prefix + f.path, data, method, crc32(bytes), bytes.length, isoToDos(f.modified), unixAttr(f.mode));
+    onProgress(++done, m.files.length);
+    await tick();
+  }
+  const cdStart = offset, count = central.length;
+  let cdSize = 0;
+  for (const c of central) { parts.push(c); cdSize += c.length; }
+  if (count >= 0xFFFF) {
+    const z = new Uint8Array(76), v = dv(z);
+    v.setUint32(0, 0x06064b50, true); v.setBigUint64(4, 44n, true); v.setUint16(12, 45, true); v.setUint16(14, 45, true);
+    v.setBigUint64(24, BigInt(count), true); v.setBigUint64(32, BigInt(count), true);
+    v.setBigUint64(40, BigInt(cdSize), true); v.setBigUint64(48, BigInt(cdStart), true);
+    v.setUint32(56, 0x07064b50, true); v.setBigUint64(64, BigInt(cdStart + cdSize), true); v.setUint32(72, 1, true);
+    parts.push(z);
+  }
+  const e = new Uint8Array(22), ev = dv(e);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, Math.min(count, 0xFFFF), true); ev.setUint16(10, Math.min(count, 0xFFFF), true);
+  ev.setUint32(12, cdSize, true); ev.setUint32(16, cdStart, true);
+  parts.push(e);
+  return new Blob(parts, { type: 'application/zip' });
+}
+
+/* ---------- DOM helpers (untrusted names are only ever inserted as text) ---------- */
+function h(tag, props, ...kids) {
+  const el = document.createElement(tag);
+  if (props) for (const k of Object.keys(props)) {
+    const v = props[k];
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? '' : String(v));
+  }
+  (function add(list) { for (const c of list) { if (c == null || c === false) continue; if (Array.isArray(c)) add(c); else el.append(c instanceof Node ? c : String(c)); } })(kids);
+  return el;
+}
+const ICONS = {
+  upload: '<path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/>',
+  download: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4 20h16"/>',
+  box: '<path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/>',
+  page: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+  code: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/>',
+  folder: '<path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/>',
+  folderOut: '<path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M12 11v5M9.5 13.5 12 16l2.5-2.5"/>',
+  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  warn: '<path d="M10.3 4.2 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4M12 17h.01"/>',
+  error: '<circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  shield: '<path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/>',
+  chev: '<path d="m9 6 6 6-6 6"/>'
+};
+function icon(name, cls) {
+  const s = document.createElement('span');
+  s.className = 'i' + (cls ? ' ' + cls : '');
+  s.setAttribute('aria-hidden', 'true');
+  s.innerHTML = '<svg viewBox="0 0 24 24">' + ICONS[name] + '</svg>';
+  return s;
+}
+function show(id, ...nodes) { $('#' + id + ' .card-body').replaceChildren(...nodes.filter(Boolean)); }
+function announce(msg) { const el = $('#live'); if (!el) return; el.textContent = ''; setTimeout(() => { el.textContent = msg; }, 60); }
+let busyCount = 0;
+function setBusy(d) {
+  busyCount = Math.max(0, busyCount + d);
+  window.onbeforeunload = busyCount ? (e) => { e.preventDefault(); e.returnValue = ''; return ''; } : null;
+}
+function saveAs(url, name) { const a = h('a', { href: url, download: name, hidden: true }); document.body.append(a); a.click(); a.remove(); }
+
+function alertBox(kind, title, detail, items, extra) {
+  const MAX = 1000;
+  return h('div', { class: 'alert ' + kind, role: kind === 'error' ? 'alert' : null },
+    icon({ error: 'error', warn: 'warn', info: 'info', ok: 'check' }[kind]),
+    h('div', { class: 'alert-body' },
+      h('strong', null, title),
+      detail ? h('p', null, detail) : null,
+      items && items.length ? h('details', { class: 'issues' }, h('summary', null, 'View details'),
+        h('ul', null, items.slice(0, MAX).map((it) => h('li', null, h('code', null, it.path), h('span', null, it.message || '')))),
+        items.length > MAX ? h('p', { class: 'small' }, `${(items.length - MAX).toLocaleString()} more not shown.`) : null) : null,
+      extra || null));
+}
+const noteBox = (n) => alertBox(n.kind, n.title, n.detail, n.items, n.extra);
+function summary(label, name, sub, files, folders, bytes) {
+  return h('div', { class: 'summary' },
+    h('div', { class: 'proj' }, h('div', { class: 'k' }, label), h('h3', { class: 'proj-name' }, name), sub ? h('p', { class: 'small muted' }, sub) : null),
+    h('dl', { class: 'stats' },
+      h('div', null, h('dt', null, 'Files'), h('dd', null, files.toLocaleString())),
+      h('div', null, h('dt', null, 'Folders'), h('dd', null, folders.toLocaleString())),
+      h('div', null, h('dt', null, 'Total Size'), h('dd', null, fmtBytes(bytes)))));
+}
+const verifyLine = (n, total, ok, label) => h('p', { class: 'verify ' + (ok ? 'ok' : 'bad') }, icon(ok ? 'shield' : 'warn'), `${n.toLocaleString()} / ${total.toLocaleString()} ${label || 'files verified'}`);
+
+function fingerprintView(hex, note, animate) {
+  const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+  let x = 0;
+  for (let i = 0; i < 64; i++) {
+    const v = parseInt(hex[i], 16), w = 1 + (v & 3), tall = v >= 8, r = document.createElementNS(NS, 'rect');
+    r.setAttribute('x', String(x)); r.setAttribute('y', tall ? '0' : '4'); r.setAttribute('width', String(w)); r.setAttribute('height', tall ? '24' : '20');
+    if (animate) r.style.animationDelay = (i * 9) + 'ms';
+    svg.append(r);
+    x += w + 1 + ((v >> 2) & 1);
+  }
+  svg.setAttribute('viewBox', `0 0 ${x} 24`);
+  svg.setAttribute('preserveAspectRatio', 'none');
+  svg.setAttribute('fill', 'currentColor');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('class', 'fp-bars' + (animate ? ' animate' : ''));
+  return h('div', { class: 'fp' },
+    h('div', { class: 'fp-top' }, h('span', null, 'Project fingerprint'), h('code', { class: 'fp-hex', title: hex }, hex.slice(0, 16).match(/.{4}/g).join(' '))),
+    svg, h('p', { class: 'fp-note' }, note));
+}
+
+function treeView(rootName, files, folders) {
+  const mk = (name) => ({ name, dirs: new Map(), files: [], size: 0, count: 0 });
+  const root = mk(rootName);
+  const dirAt = (p) => { let n = root; if (p) for (const s of p.split('/')) { let c = n.dirs.get(s); if (!c) n.dirs.set(s, c = mk(s)); n = c; } return n; };
+  for (const d of folders) dirAt(d);
+  for (const f of files) dirAt(parentOf(f.path)).files.push({ name: baseName(f.path), size: f.size, path: f.path });
+  (function agg(n) { n.count = n.files.length; n.size = n.files.reduce((s, f) => s + f.size, 0); for (const d of n.dirs.values()) { agg(d); n.size += d.size; n.count += d.count; } })(root);
+  let openAll = files.length <= 150;
+  const level = (node) => {
+    const ul = h('ul', { class: 'tree' });
+    for (const d of [...node.dirs.values()].sort(byName)) {
+      const det = h('details', { open: openAll || null },
+        h('summary', { class: 'row' }, icon('chev', 'chev'), icon('folder', 'k-dir'), h('span', { class: 'n' }, d.name),
+          h('span', { class: 'count' }, d.count ? pl(d.count, 'file') : 'empty'), h('span', { class: 'size' }, d.count ? fmtBytes(d.size) : '')));
+      let filled = false;
+      const fill = () => { if (!filled && det.open) { filled = true; det.append(level(d)); } };
+      det.addEventListener('toggle', fill);
+      if (openAll) fill();
+      ul.append(h('li', null, det));
+    }
+    for (const f of node.files.sort(byName)) {
+      ul.append(h('li', { class: 'row leaf', title: f.path }, icon('page', 'k-' + kindOf(f.name)), h('span', { class: 'n' }, f.name), h('span', { class: 'size' }, fmtBytes(f.size))));
+    }
+    return ul;
+  };
+  const scroll = h('div', { class: 'tree-scroll' }, level(root));
+  const toggle = h('button', { class: 'link', type: 'button', onclick: () => { openAll = !openAll; toggle.textContent = openAll ? 'Collapse all' : 'Expand all'; scroll.replaceChildren(level(root)); } }, openAll ? 'Collapse all' : 'Expand all');
+  return h('div', { class: 'tree-box' },
+    h('div', { class: 'tree-head' }, icon('folder', 'k-dir'), h('strong', null, rootName), h('span', { class: 'meta' }, `${pl(root.count, 'file')}, ${fmtBytes(root.size)}`), root.dirs.size ? toggle : null),
+    scroll);
+}
+
+function dropZone(o) {
+  const input = h('input', { type: 'file', accept: o.accept, hidden: true });
+  input.addEventListener('change', () => { const f = input.files && input.files[0]; input.value = ''; if (f) o.onFile(f); });
+  const zone = h('div', { class: 'drop', role: 'button', tabindex: '0', 'aria-label': o.button + '. ' + o.hint },
+    h('span', { class: 'drop-icon' }, icon(o.icon)),
+    h('p', { class: 'drop-title' }, o.title),
+    h('p', { class: 'drop-hint' }, o.hint),
+    h('span', { class: 'btn primary' }, icon('upload'), o.button),
+    input);
+  zone.addEventListener('click', (e) => { if (e.target !== input) input.click(); });
+  zone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+  let depth = 0;
+  zone.addEventListener('dragenter', (e) => { e.preventDefault(); depth++; zone.classList.add('over'); });
+  zone.addEventListener('dragover', (e) => { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; });
+  zone.addEventListener('dragleave', () => { depth = Math.max(0, depth - 1); if (!depth) zone.classList.remove('over'); });
+  zone.addEventListener('drop', (e) => { e.preventDefault(); depth = 0; zone.classList.remove('over'); const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) o.onFile(f); });
+  return h('div', null, zone, h('p', { class: 'note' }, icon(o.noteIcon), o.note));
+}
+
+function progressView(title, steps, onCancel) {
+  const fill = h('i');
+  const bar = h('div', { class: 'bar', role: 'progressbar', 'aria-label': title, 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': '0' }, fill);
+  const a = h('p', { class: 'p-line' }), b = h('p', { class: 'p-line muted small' });
+  const items = (steps || []).map((s) => h('li', null, h('span', { class: 'dot' }), s));
+  const el = h('div', { class: 'progress', 'aria-busy': 'true' },
+    h('div', { class: 'p-head' }, h('span', { class: 'spinner', 'aria-hidden': 'true' }), h('strong', null, title)),
+    bar, a, b, items.length ? h('ol', { class: 'steps' }, items) : null,
+    onCancel ? h('div', null, h('button', { class: 'btn quiet sm', type: 'button', onclick: (e) => { e.currentTarget.disabled = true; e.currentTarget.textContent = 'Cancelling…'; onCancel(); } }, 'Cancel')) : null);
+  let last = 0;
+  return {
+    el,
+    set(frac, t1, t2, force) {
+      const now = performance.now();
+      if (!force && now - last < 60) return;
+      last = now;
+      const pct = Math.round(Math.max(0, Math.min(1, frac || 0)) * 1000) / 10;
+      fill.style.width = pct + '%'; bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+      if (t1 != null) a.textContent = t1;
+      if (t2 != null) b.textContent = t2;
+    },
+    step(i) { items.forEach((li, k) => { li.className = k < i ? 'done' : k === i ? 'active' : ''; }); }
+  };
+}
+
+/* ---------- Create Project File (ZIP to HTML) ---------- */
+const C = { state: 'idle', file: null, an: null, project: null, excludeMac: true, error: null, genError: null, result: null, url: null, job: null };
+function resetCreateData() {
+  if (C.url) URL.revokeObjectURL(C.url);
+  Object.assign(C, { file: null, an: null, project: null, error: null, genError: null, result: null, url: null });
+}
+function resetCreate() { resetCreateData(); C.state = 'idle'; renderCreate(); }
+function renderCreate() {
+  if (C.state === 'idle') return show('create',
+    C.error ? alertBox('error', C.error.title, C.error.detail) : null,
+    dropZone({ icon: 'box', accept: '.zip,application/zip,application/x-zip-compressed', title: 'Drop a project ZIP here', hint: 'The complete folder structure and files will be packaged into one HTML file.', button: 'Upload Project ZIP', noteIcon: 'lock', note: 'No files are uploaded to a server. Processing happens in your browser.', onFile: onZip }));
+  if (C.state === 'ready') return show('create', createReady());
+  if (C.state === 'done') return show('create', createDone());
+}
+function createReady() {
+  const p = C.project, blocked = p.errors.length > 0;
+  const gen = h('button', { class: 'btn primary lg', type: 'button', disabled: blocked || !p.files.length || null, onclick: onGenerate }, icon('box'), 'Generate Single HTML');
+  const one = p.errors.length === 1;
+  const ack = blocked && p.files.length ? h('label', { class: 'check' },
+    h('input', { type: 'checkbox', onchange: (e) => { gen.disabled = !e.target.checked; } }),
+    h('span', null, `Create the package without ${one ? 'this file' : 'these files'}. The package will list ${one ? 'it' : 'them'} as not included.`)) : null;
+  const estimate = p.files.reduce((s, f) => s + (f.type === 'text' ? f.size * 1.06 : f.size * 4 / 3), 0) + SELF.code.length + SELF.style.length + SELF.shell.length;
+  return h('div', { class: 'stack' },
+    summary('Project', p.projectName, `From ${C.file.name} (${fmtBytes(C.file.size)})`, p.files.length, p.folders.length, p.totalSize),
+    h('p', { class: 'line' }, icon('folder'), p.zipHasRoot ? `The ZIP’s top-level folder “${p.rootFolder}” is the project root.` : `The ZIP has several top-level items. Extraction will place them in a folder named “${p.rootFolder}”.`),
+    p.macCount ? h('label', { class: 'check' },
+      h('input', { type: 'checkbox', checked: C.excludeMac || null, onchange: (e) => { C.excludeMac = e.target.checked; C.project = buildProject(C.an, C.excludeMac); C.genError = null; renderCreate(); } }),
+      h('span', null, `Leave out macOS metadata: ${pl(p.macCount, 'item')} in __MACOSX folders and .DS_Store files. The Mac archiver adds these; they are not part of your project.`)) : null,
+    blocked ? alertBox('error', `Could not process ${pl(p.errors.length, 'file')}.`, 'Fix the ZIP and upload it again, or continue without them.', p.errors, ack) : null,
+    !p.files.length ? alertBox('error', 'There are no files to package.', 'Choose a ZIP that contains your project files.') : null,
+    p.warnings.length ? alertBox('warn', pl(p.warnings.length, 'warning'), 'You can still create the package.', p.warnings) : null,
+    C.genError ? alertBox('error', C.genError.title, C.genError.detail, C.genError.items) : null,
+    treeView(p.rootFolder, p.files.map((f) => ({ path: f.rel, size: f.size })), p.folders),
+    h('div', { class: 'actions' }, gen, h('button', { class: 'btn quiet', type: 'button', onclick: resetCreate }, 'Choose another ZIP')),
+    p.files.length ? h('p', { class: 'small muted' }, `The HTML package will be about ${fmtBytes(Math.round(estimate))}.`) : null);
+}
+function createDone() {
+  const r = C.result, p = C.project;
+  return h('div', { class: 'stack' },
+    h('div', { class: 'done-head' }, h('span', { class: 'badge ok' }, icon('check')),
+      h('div', null, h('h3', null, 'Project packaged successfully'), h('p', { class: 'small muted' }, `${p.projectName}: ${pl(r.total, 'file')} in ${pl(p.folders.length, 'folder')}`))),
+    h('div', { class: 'filecard' }, icon('code'), h('div', null, h('div', { class: 'fname' }, r.name), h('div', { class: 'small muted' }, `${fmtBytes(r.blob.size)}, one self-contained HTML file`))),
+    verifyLine(r.verified, r.total, true),
+    fingerprintView(r.fingerprint, 'Opening this package for extraction shows the same fingerprint. Matching fingerprints mean identical contents.', true),
+    h('div', { class: 'actions' },
+      h('a', { class: 'btn primary lg', href: C.url, download: r.name }, icon('download'), 'Download HTML'),
+      h('button', { class: 'btn quiet', type: 'button', onclick: () => { C.state = 'ready'; renderCreate(); } }, 'Back to project'),
+      h('button', { class: 'btn quiet', type: 'button', onclick: resetCreate }, 'Package another ZIP')),
+    h('p', { class: 'small muted' }, 'To restore the project, open the downloaded file in a browser, or upload it to Extract Project File.'));
+}
+async function onZip(file) {
+  if (C.state === 'busy') return;
+  if (!/\.zip$/i.test(file.name)) {
+    C.state = 'idle';
+    C.error = { title: 'Please choose a .zip file.', detail: /\.html?$/i.test(file.name) ? 'To restore a project package, use Extract Project File.' : `“${file.name}” is not a ZIP archive.` };
+    return renderCreate();
+  }
+  resetCreateData();
+  C.file = file; C.state = 'busy';
+  const job = C.job = newJob();
+  const pv = progressView('Reading project…', null, () => { job.cancelled = true; });
+  show('create', pv.el);
+  pv.set(0, 'Opening ZIP…', fmtBytes(file.size), true);
+  setBusy(1);
+  try {
+    C.an = await analyzeZip(file, job, (d, t, db, tb) => pv.set(tb ? db / tb : t ? d / t : 1, `${d.toLocaleString()} / ${t.toLocaleString()} files`, `${fmtBytes(db)} / ${fmtBytes(tb)}`, d === t));
+    if (!C.an.files.length && !C.an.errors.length) throw new UserError('The ZIP does not contain any files.');
+    C.project = buildProject(C.an, C.excludeMac);
+    C.state = 'ready';
+    announce(C.project.projectName + ' is ready to package.');
+  } catch (e) {
+    C.state = 'idle'; C.an = null; C.project = null;
+    if (!(e instanceof Cancelled)) C.error = { title: 'This ZIP could not be read.', detail: e instanceof UserError ? e.message : describe(e) };
+  } finally { setBusy(-1); }
+  renderCreate();
+}
+async function onGenerate() {
+  const p = C.project;
+  if (!p || C.state === 'busy') return;
+  C.state = 'busy'; C.genError = null;
+  const job = C.job = newJob();
+  const pv = progressView('Creating project package…', ['Encoding assets', 'Building manifest', 'Generating HTML', 'Verifying package'], () => { job.cancelled = true; });
+  show('create', pv.el);
+  setBusy(1);
+  try {
+    const r = await generatePackage(p, job, pv);
+    if (C.url) URL.revokeObjectURL(C.url);
+    C.result = r; C.url = URL.createObjectURL(r.blob); C.state = 'done';
+    announce('Project packaged successfully.');
+  } catch (e) {
+    C.state = 'ready';
+    if (!(e instanceof Cancelled)) C.genError = e instanceof UserError ? { title: e.message, detail: e.detail, items: e.items } : { title: 'The package could not be created.', detail: describe(e) };
+  } finally { setBusy(-1); }
+  renderCreate();
+}
+
+/* ---------- Extract Project File (HTML to folder) ---------- */
+const X = { state: 'idle', pkg: null, verify: null, fp: null, error: null, note: null, result: null, dest: null, zip: null, job: null };
+function resetExtractData() {
+  if (X.zip) URL.revokeObjectURL(X.zip.url);
+  Object.assign(X, { pkg: null, verify: null, fp: null, error: null, note: null, result: null, dest: null, zip: null });
+}
+function resetExtract() { resetExtractData(); X.state = 'idle'; renderExtract(); }
+function renderExtract() {
+  if (X.state === 'idle') return show('extract',
+    X.error ? alertBox('error', X.error.title, X.error.detail) : null,
+    dropZone({ icon: 'code', accept: '.html,.htm,text/html', title: 'Drop a project package here', hint: 'Upload a project HTML file created by this builder and restore all files and folders.', button: 'Upload Project HTML', noteIcon: 'folder', note: 'The original folder structure will be preserved.', onFile: onPackageFile }));
+  if (X.state === 'ready') return show('extract', extractReady());
+  if (X.state === 'confirm') return show('extract', extractConfirm());
+  if (X.state === 'extracted') return show('extract', extractDone());
+}
+function extractReady() {
+  const m = X.pkg.manifest, v = X.verify, canWrite = typeof window.showDirectoryPicker === 'function';
+  const total = m.files.reduce((s, f) => s + f.size, 0), when = m.created ? new Date(m.created) : null, bits = [];
+  if (X.pkg.fileName) bits.push(X.pkg.fileName + (X.pkg.size != null ? ` (${fmtBytes(X.pkg.size)})` : ''));
+  if (when && !isNaN(when)) bits.push('created ' + when.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }));
+  const unreadable = m.excluded && Array.isArray(m.excluded.unreadable) ? m.excluded.unreadable : [];
+  const links = m.files.filter((f) => (f.mode & 0xF000) === 0xA000).length;
+  return h('div', { class: 'stack' },
+    X.note ? noteBox(X.note) : null,
+    summary('Project package', m.projectName, bits.join(', '), m.files.length, m.folders.length, total),
+    verifyLine(v.verified, v.total, !v.failed.length),
+    v.failed.length ? alertBox('warn', 'File verification failed', `${pl(v.failed.length, 'file')} in this package ${v.failed.length === 1 ? 'does' : 'do'} not match the original checksum. You can still extract the project to inspect ${v.failed.length === 1 ? 'it' : 'them'}.`, v.failed) : null,
+    unreadable.length ? alertBox('info', `${pl(unreadable.length, 'file')} could not be read when this package was created.`, 'They are not in this package.', unreadable.map((x) => ({ path: String(x.path), message: String(x.reason || '') }))) : null,
+    X.fp ? fingerprintView(X.fp, 'Compare this with the fingerprint shown when the package was created. Matching fingerprints mean identical contents.', false) : null,
+    treeView(m.rootFolder, m.files, m.folders),
+    canWrite
+      ? h('p', { class: 'line' }, icon('folder'), `Extract Project creates a folder named “${m.rootFolder}” inside the destination you choose.`)
+      : alertBox('info', 'Direct folder extraction is not supported in this browser.', 'You can still download the project as a ZIP. Chrome, Edge and Opera can write folders directly.'),
+    links ? h('p', { class: 'line' }, icon('info'), `${pl(links, 'symbolic link')} will be written as small text files holding the link target, because browsers cannot create links. Download ZIP keeps them as links.`) : null,
+    h('div', { class: 'actions' },
+      canWrite ? h('button', { class: 'btn primary lg', type: 'button', onclick: onExtract }, icon('folderOut'), 'Extract Project') : null,
+      h('button', { class: canWrite ? 'btn lg' : 'btn primary lg', type: 'button', onclick: onDownloadZip }, icon('download'), 'Download ZIP'),
+      h('button', { class: 'btn quiet', type: 'button', onclick: resetExtract }, 'Choose another package')));
+}
+function extractConfirm() {
+  const m = X.pkg.manifest;
+  return h('div', { class: 'stack' },
+    alertBox('warn', `“${m.rootFolder}” already exists in “${X.dest.name}”.`, 'Files with the same names will be overwritten. Other files in that folder are left untouched.'),
+    h('div', { class: 'actions' },
+      h('button', { class: 'btn primary', type: 'button', onclick: () => runExtract(X.dest) }, 'Overwrite and extract'),
+      h('button', { class: 'btn', type: 'button', onclick: onExtract }, 'Choose another folder'),
+      h('button', { class: 'btn quiet', type: 'button', onclick: () => { X.dest = null; X.state = 'ready'; renderExtract(); } }, 'Cancel')));
+}
+function extractDone() {
+  const r = X.result, clean = !r.cancelled && !r.errors.length && !r.mismatched.length;
+  return h('div', { class: 'stack' },
+    X.note ? noteBox(X.note) : null,
+    h('div', { class: 'done-head' }, h('span', { class: 'badge ' + (clean ? 'ok' : 'warn') }, icon(clean ? 'check' : 'warn')),
+      h('div', null, h('h3', null, r.cancelled ? 'Extraction cancelled' : clean ? 'Project extracted' : 'Project extracted with problems'),
+        h('p', { class: 'small muted' }, `${pl(r.written, 'file')} and ${pl(r.folders, 'folder')} written to `, h('code', null, r.location)))),
+    r.hashed ? verifyLine(r.verified, r.hashed, !r.mismatched.length, 'files verified on disk') : null,
+    r.mismatched.length ? alertBox('error', 'File verification failed', 'These files were written, but what is on disk does not match the original.', r.mismatched) : null,
+    r.errors.length ? alertBox('error', `Could not write ${pl(r.errors.length, 'item')}.`, 'Everything else was written.', r.errors) : null,
+    h('div', { class: 'actions' },
+      h('button', { class: 'btn', type: 'button', onclick: onExtract }, icon('folderOut'), 'Extract again'),
+      h('button', { class: 'btn', type: 'button', onclick: onDownloadZip }, icon('download'), 'Download ZIP'),
+      h('button', { class: 'btn quiet', type: 'button', onclick: () => { X.note = null; X.state = 'ready'; renderExtract(); } }, 'Back to package')));
+}
+async function onPackageFile(file) {
+  if (X.state === 'busy') return;
+  if (!/\.html?$/i.test(file.name)) {
+    X.state = 'idle';
+    X.error = { title: 'Please choose an .html file.', detail: /\.zip$/i.test(file.name) ? 'To package a ZIP, use Create Project File.' : `“${file.name}” is not a project package.` };
+    return renderExtract();
+  }
+  resetExtractData();
+  X.state = 'busy';
+  const job = X.job = newJob();
+  const pv = progressView('Reading package…', null, () => { job.cancelled = true; });
+  show('extract', pv.el);
+  pv.set(0, 'Checking the package…', fmtBytes(file.size), true);
+  setBusy(1);
+  try {
+    const pkg = await openPackageBlob(file, file.name);
+    await loadPackage(pkg, job, pv);
+  } catch (e) {
+    X.state = 'idle'; X.pkg = null;
+    if (!(e instanceof Cancelled)) X.error = e instanceof PackageError ? { title: e.message, detail: e.detail } : { title: 'This package could not be read.', detail: describe(e) };
+  } finally { setBusy(-1); }
+  renderExtract();
+}
+async function loadPackage(pkg, job, pv) {
+  const v = await verifyPackage(pkg, job, (d, t) => pv.set(t ? d / t : 1, `Verifying files… ${d.toLocaleString()} / ${t.toLocaleString()}`, 'Checking every file against its SHA-256 checksum', d === t));
+  X.pkg = pkg; X.verify = v; X.fp = await fingerprint(pkg.manifest.files, pkg.manifest.folders); X.state = 'ready';
+  announce(v.failed.length ? 'Package loaded. Some files failed verification.' : 'Package loaded and verified.');
+}
+async function onExtract() {
+  if (!X.pkg) return;
+  let dest;
+  try { dest = await window.showDirectoryPicker({ id: 'upb-extract', mode: 'readwrite' }); }
+  catch (e) {
+    if (e && e.name === 'AbortError') return;
+    X.note = { kind: 'error', title: 'The folder picker could not be opened.', detail: e && e.name === 'SecurityError' ? 'This browser blocked folder access here, for example inside an embedded preview. Open project-builder.html directly from your computer in Chrome or Edge, or use Download ZIP.' : describe(e) };
+    X.state = 'ready'; return renderExtract();
+  }
+  const name = X.pkg.manifest.rootFolder;
+  try {
+    await dest.getDirectoryHandle(name);
+    X.dest = dest; X.state = 'confirm'; return renderExtract();
+  } catch (e) {
+    if (e && e.name === 'TypeMismatchError') { X.note = { kind: 'error', title: `“${dest.name}” already contains a file named “${name}”.`, detail: 'Choose a different destination folder.' }; X.state = 'ready'; return renderExtract(); }
+    if (!e || e.name !== 'NotFoundError') { X.note = { kind: 'error', title: 'The destination folder could not be used.', detail: fsMessage(e) }; X.state = 'ready'; return renderExtract(); }
+  }
+  runExtract(dest);
+}
+async function runExtract(dest) {
+  const m = X.pkg.manifest;
+  X.state = 'busy'; X.note = null; X.dest = null;
+  const job = X.job = newJob();
+  const pv = progressView('Extracting project…', null, () => { job.cancelled = true; });
+  show('extract', pv.el);
+  pv.set(0, `0 / ${m.files.length.toLocaleString()} files`, `Writing to ${dest.name}/${m.rootFolder}`, true);
+  setBusy(1);
+  try {
+    X.result = await extractToFolder(X.pkg, dest, job, (d, t) => pv.set(t ? d / t : 1, `${d.toLocaleString()} / ${t.toLocaleString()} files`, null, d === t));
+    X.state = 'extracted';
+    announce(X.result.cancelled ? 'Extraction cancelled.' : 'Project extracted.');
+  } catch (e) {
+    X.state = 'ready';
+    X.note = { kind: 'error', title: 'The project could not be extracted.', detail: fsMessage(e) };
+  } finally { setBusy(-1); }
+  renderExtract();
+}
+async function onDownloadZip() {
+  if (!X.pkg || X.state === 'busy') return;
+  const back = X.state === 'extracted' ? 'extracted' : 'ready';
+  const job = X.job = newJob();
+  const pv = progressView('Building ZIP…', null, () => { job.cancelled = true; });
+  X.state = 'busy';
+  show('extract', pv.el);
+  setBusy(1);
+  try {
+    const blob = await buildZip(X.pkg, job, (d, t) => pv.set(t ? d / t : 1, `${d.toLocaleString()} / ${t.toLocaleString()} files`, 'Text files are compressed; images and media are stored as-is', d === t));
+    const m = X.pkg.manifest;
+    let name = safeName(m.sourceZip || m.projectName);
+    if (!/\.zip$/i.test(name)) name += '.zip';
+    if (X.zip) URL.revokeObjectURL(X.zip.url);
+    X.zip = { url: URL.createObjectURL(blob), name, size: blob.size };
+    saveAs(X.zip.url, name);
+    X.note = { kind: 'ok', title: `${name} is ready (${fmtBytes(blob.size)}).`, detail: 'The download should start on its own. If it does not, use the button below.', extra: h('a', { class: 'btn sm', href: X.zip.url, download: name }, icon('download'), 'Download ZIP again') };
+    announce('ZIP ready.');
+  } catch (e) {
+    if (!(e instanceof Cancelled)) X.note = { kind: 'error', title: 'The ZIP could not be created.', detail: describe(e) };
+  } finally { setBusy(-1); }
+  X.state = back;
+  renderExtract();
+}
+
+/* ---------- startup ---------- */
+function showBanner(m) {
+  const b = $('#pkg-banner');
+  if (!b) return;
+  b.replaceChildren(icon('box'), h('div', null,
+    h('strong', null, `This file is a portable package of “${m.projectName}”.`),
+    h('span', { class: 'muted' }, ` It holds ${pl(m.files.length, 'file')} in ${pl(m.folders.length, 'folder')}. Use Extract Project to restore them; nothing else is needed.`)));
+  b.hidden = false;
+}
+async function loadEmbedded(pv) {
+  const job = X.job = newJob();
+  setBusy(1);
+  try {
+    const pkg = openEmbedded();
+    if (!pkg) throw damaged('Its project data is missing. The file may have been cut short while downloading.');
+    showBanner(pkg.manifest);
+    await loadPackage(pkg, job, pv);
+  } catch (e) {
+    X.state = 'idle';
+    X.error = e instanceof PackageError ? { title: e.message, detail: e.detail } : { title: 'This package could not be opened.', detail: describe(e) };
+  } finally { setBusy(-1); }
+  renderExtract();
+}
+function boot() {
+  $('#app').append(document.getElementById('upb-shell').content.cloneNode(true));
+  renderCreate();
+  if (document.querySelector('meta[name="upb-package"]')) {
+    document.body.classList.add('pkg-mode');
+    X.state = 'busy';
+    const pv = progressView('Opening project package…');
+    pv.set(0, 'Loading the embedded project data…', '', true);
+    show('extract', pv.el);
+    const go = () => loadEmbedded(pv);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go, { once: true }); else go();
+  } else renderExtract();
+  // Files dropped outside a drop zone are routed by type instead of opening in the browser.
+  window.addEventListener('dragover', (e) => { if (!(e.target.closest && e.target.closest('.drop'))) { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; } });
+  window.addEventListener('drop', (e) => {
+    if (e.target.closest && e.target.closest('.drop')) return;
+    e.preventDefault();
+    const f = e.dataTransfer && e.dataTransfer.files[0];
+    if (!f) return;
+    if (/\.zip$/i.test(f.name) && C.state !== 'busy') onZip(f);
+    else if (/\.html?$/i.test(f.name) && X.state !== 'busy') onPackageFile(f);
+  });
+}
+boot();
+})();
+</script>
+</body>
+</html>
